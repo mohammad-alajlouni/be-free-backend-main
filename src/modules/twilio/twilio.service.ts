@@ -27,7 +27,7 @@ export class TwilioService {
 
     try {
       await this.client.messages.create({
-        from,
+        messagingServiceSid: process.env.TWILIO_MESSAGING_SERVICE_SID,
         to,
         body: `رمز التحقق الخاص بك لتسجيل الدخول إلى تطبيق تحرر هو: ${otp}\n\nيرجى عدم مشاركة هذا الرمز مع أي شخص.`,
       });
