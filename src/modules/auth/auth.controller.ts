@@ -166,7 +166,7 @@ export class AuthController {
     }
   }
 
-  @Throttle({ default: { limit: 3, ttl: 122880 } })
+  @Throttle(3, 122880)
   @Public()
   @Post('send-otp')
   @ApiOperation({ summary: 'Send OTP to user mobile' })
@@ -191,7 +191,7 @@ export class AuthController {
     }
   }
 
-  @Throttle({ default: { limit: 3, ttl: 122880 } })
+  @Throttle(3, 122880)
   @Public()
   @Post('resend-otp')
   @ApiOperation({ summary: 'Resend OTP to user mobile' })

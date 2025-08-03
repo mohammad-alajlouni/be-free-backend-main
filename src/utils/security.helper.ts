@@ -22,8 +22,9 @@ export class SecurityHelper {
     };
   }
 
-  public static configureRateLimiter(): Array<{ ttl: number; limit: number }> {
-    return [{ ttl: 61440, limit: 50 }];
+  // ✅ التعديل هنا: ترجع كائن واحد بدلاً من مصفوفة
+  public static configureRateLimiter(): { ttl: number; limit: number } {
+    return { ttl: 61440, limit: 50 };
   }
 
   public static configureJWTOptions(): object {
