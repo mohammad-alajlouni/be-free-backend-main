@@ -29,7 +29,7 @@ export class TwilioService {
       await this.client.messages.create({
         from,
         to,
-        body: `Your Be Free OTP is ${otp}`,
+        body: `رمز التحقق الخاص بك لتسجيل الدخول إلى تطبيق تحرر هو: ${otp}\n\nيرجى عدم مشاركة هذا الرمز مع أي شخص.`,
       });
     } catch (error) {
       throw new HttpException(
