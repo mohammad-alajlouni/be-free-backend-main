@@ -1,7 +1,21 @@
 {
+  "name": "be-free-backend-main",
+  "version": "1.0.0",
+  "description": "Backend service for Be Free platform",
+  "scripts": {
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "build": "nest build"
+  },
   "dependencies": {
     "@nestjs/mongoose": "^11.0.3",
     "mongodb": "^6.18.0",
     "mongoose": "^8.16.5"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "typescript": "^5.0.0"
   }
 }
