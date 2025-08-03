@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Chat</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+  </head>
+  <body>
+    <h1>Chat between two users</h1>
+    <div>
+      <label for="message">Message: </label>
+      <input type="text" id="message" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div id="chat-box">
+      <h2>Chat Messages</h2>
+      <ul id="messages"></ul>
+    </div>
+
+    <script>
+      const doctorId = '67924ddb5872df5f373d1feb';
+      const patientId = '678fd64cec8c6aa81732002a';
+      const currentUserId = '67924ddb5872df5f373d1feb';
+      const roomId = '123';
+
+      getChatHistory();
+
+      const socket = io('http://localhost:8080/chat', {
+        transports: ['websocket'],
+        query: { roomId },
+      });
+
+      socket.on('connect', () => {
+        console.log('WebSocket connected');
+      });
+
+      socket.on('disconnect', () => {
+        console.log('WebSocket disconnected');
+      });
+
+      const chatHistory = socket.on('receiveMessage', (data) => {
+        console.log(data);
+        const messageElement = document.createElement('li');
+        messageElement.textContent = `User ${data.ownerId}: ${data.content}:`;
+        document.getElementById('messages').appendChild(messageElement);
+      });
+
+      function sendMessage() {
+        const content = document.getElementById('message').value;
+        socket.emit('sendMessage', {
+          roomId,
+          ownerId: currentUserId,
+          content,
+        });
+      }
+
+      async function getChatHistory() {
+        let data = await fetch(
+          `http://localhost:8080/chat/history?roomId=${roomId}`,
+        );
+
+        data = await data.json();
+        console.log(data);
+
+        data.data.forEach((message) => {
+          const messageElement = document.createElement('li');
+          messageElement.textContent = `User ${message?.ownerId?.fullName}: ${message?.content}`;
+          document.getElementById('messages').appendChild(messageElement);
+        });
+      }
+    </script>
+  </body>
+</html>
