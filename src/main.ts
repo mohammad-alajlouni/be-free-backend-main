@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-
+import { IoAdapter } from '@nestjs/platform-socket.io';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { validationPipe } from './pipes/validation.pipe';
@@ -11,6 +11,9 @@ async function bootstrap() {
     cors: true,
     rawBody: true,
   });
+
+  // ✅ استخدم WebSocket adapter
+  app.useWebSocketAdapter(new IoAdapter(app));
 
   app.enableCors({
     origin: true,
