@@ -159,7 +159,10 @@ export class UsersService {
   }
 
   const otp = crypto.randomInt(100000, 999999).toString();
+
   user.otp = otp;
+  user.otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); // تنتهي بعد 5 دقائق
+
   await user.save();
 
   return otp;

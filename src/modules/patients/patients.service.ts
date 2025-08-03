@@ -45,19 +45,18 @@ export class PatientsService {
 
   // Generate OTP for patient login
   async generateOtp(mobile: string): Promise<any> {
-    const patient = await this.patientModel.findOne({ mobile });
+  const patient = await this.patientModel.findOne({ mobile });
 
-    if (!patient) {
-      throw new HttpException('Patient not found', HttpStatus.NOT_FOUND);
-    }
-
-    // const otp = crypto.randomInt(100000, 999999).toString();
-    const otp = '123456';
-    patient.otp = otp;
-    await patient.save();
-
-    return otp;
+  if (!patient) {
+    throw new HttpException('Patient not found', HttpStatus.NOT_FOUND);
   }
+
+  const otp = crypto.randomInt(100000, 999999).toString(); // بدل 123456
+  patient.otp = otp;
+  await patient.save();
+
+  return otp;
+}
 
   // Clear the OTP after successful login or expiration
   async clearOtp(mobile: string): Promise<any> {

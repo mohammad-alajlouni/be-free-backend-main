@@ -26,22 +26,11 @@ export class TwilioService {
     const to = channel === OTPChannel.WHATSAPP ? `whatsapp:${mobile}` : mobile;
 
     try {
-      if (channel === OTPChannel.WHATSAPP) {
-        await this.client.messages.create({
-          from,
-          to,
-          contentSid: process.env.TWILIO_CONTENT_SID,
-          contentVariables: JSON.stringify({
-            '1': `Your Be Free OTP is ${otp}`,
-          }),
-        } as any); // Cast to 'any' because of Twilio's SDK type limitations for contentSid
-      } else {
-        await this.client.messages.create({
-          from,
-          to,
-          body: `Your Be Free OTP is ${otp}`,
-        });
-      }
+      await this.client.messages.create({
+        from,
+        to,
+        body: `Your Be Free OTP is ${otp}`,
+      });
     } catch (error) {
       throw new HttpException(
         error.message || 'Failed to send OTP',

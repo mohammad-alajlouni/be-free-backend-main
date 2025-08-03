@@ -8,7 +8,8 @@ export type UserDocument = HydratedDocument<User>;
 export class User {
   @Prop()
   _id: string;
-
+@Prop({ type: Date, default: null })
+otpExpiresAt?: Date;
   @Prop()
   fullName: string;
 
